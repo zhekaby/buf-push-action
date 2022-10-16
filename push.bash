@@ -7,18 +7,23 @@ fail() {
   exit 1
 }
 
-if [ $# -ne 1 ]; then
-  echo "Usage: $0 <input>" >&2
+if [ $# -lt 1 ] || [ $# -gt 2 ]; then
+  echo "Usage: $0 <input> [tag]" >&2
   exit 1
 fi
 
 BUF_INPUT="$1"
+BUF_TAG="$2"
 
 # Make sure the token isn't accidentally logged
 echo "::add-mask::${BUF_TOKEN}"
 
-if [ -z "${GITHUB_SHA}" ]; then
-  fail "the commit was not provided"
+if [ -z "${BUF_TAG}" ]; then
+  BUF_TAG="${GITHUB_SHA}"
+fi
+
+if [ -z "${BUF_TAG}" ]; then
+  fail "the commit or buf tag was not provided"
 fi
 
 if [ -z "${BUF_TOKEN}" ]; then
@@ -33,4 +38,4 @@ if [ -z "$BUF_COMMAND" ]; then
   fail "$NOT_INSTALLED_MESSAGE"
 fi
 
-BUF_TOKEN="${BUF_TOKEN}" "${BUF_COMMAND}" push --tag "${GITHUB_SHA}" "${BUF_INPUT}"
+BUF_TOKEN="${BUF_TOKEN}" "${BUF_COMMAND}" push --tag "${BUF_TAG}" "${BUF_INPUT}"

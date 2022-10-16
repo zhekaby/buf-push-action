@@ -12,6 +12,9 @@ inputs:
     description: The Input path.
     default: '.'
     required: false
+  tag:
+    description: The push tag.
+    required: false
 runs:
   using: composite
   steps:
@@ -19,4 +22,4 @@ runs:
       shell: bash
       env:
         BUF_TOKEN: ${{ inputs.buf_token }}
-      run: $GITHUB_ACTION_PATH/push.bash ${{ inputs.input }}
+      run: $GITHUB_ACTION_PATH/push.bash ${{ inputs.input }} ${{ inputs.tag }}

@@ -38,10 +38,11 @@ We recommend using [`buf-setup-action`][buf-setup] to install it (as in the exam
 
 ## Configuration
 
-Parameter | Description | Required | Default
-:---------|:------------|:---------|:-------
+Parameter | Description                                                                | Required | Default
+:---------|:---------------------------------------------------------------------------|:---------|:-------
 `buf_token` | The [Buf authentication token][buf-token] used for private [Inputs][input] | ✅  | [`${{github.token}}`][github-token]
-`input` | The path of the [Input] you want to push to BSR as a module | | `.`
+`input` | The path of the [Input] you want to push to BSR as a module                | | `.`
+`tag` | The tag of the push                                     | | `$GITHUB_SHA`
 
 > These parameters are derived from [`action.yml`][./action.yml].
 
